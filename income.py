@@ -40,10 +40,24 @@ print('Number of test data:', df_test.shape[0])
 
 # prepare income column for classification
 # income is 1 if higher than 50k, 0 if lower.
-df_train.loc[df_train['income'] == ' >50K'] = 1
-df_train.loc[df_train['income'] == ' <=50K'] = 0
-df_test.loc[df_test['income'] == ' >50K'] = 1
-df_test.loc[df_test['income'] == ' <=50K'] = 0
+df_train.loc[df_train['income'] == ' >50K', ['income']] = 1
+df_train.loc[df_train['income'] == ' <=50K', ['income']] = 0
+df_test.loc[df_test['income'] == ' >50K', ['income']] = 1
+df_test.loc[df_test['income'] == ' <=50K', ['income']] = 0
+
+
+# perform one-hot encoding for categorical columns 
+print('\n=== DATA SHAPES BEFORE ONE-HOT ENCODING ===')
+print('Training set:', df_train.shape)
+print('Test set:', df_test.shape)
+df_train = pd.get_dummies(df_train)
+df_test = pd.get_dummies(df_test)
+
+
+# correct for missing variables in test dataset 
+cols = df_train.columns
+df_test = df_test.loc[:, cols]
+df_test = df_test.fillna(0)
 
 
 # prepare training and test datasets
@@ -52,12 +66,17 @@ X_test = df_test.loc[:, ~(df_test.columns == 'income')].values
 Y_train = df_train['income'].values
 Y_test = df_test['income'].values
 
+print('\n=== DATA SHAPES AFTER ALL SPLITS ===')
+print('X_train:', X_train.shape)
+print('Y_train:', Y_train.shape)
+print('X_test:', X_test.shape)
+print('Y_test:', Y_test.shape)
 
-# scale the variables to help train the neural network
+
+# conduct data scaling
 scaler = MinMaxScaler()
-scaler.fit(X_train)
-X_train = scaler.transform(X_train)
-X_test = scaler.transform(X_test)
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.fit_transform(X_test)
 
 
     ###############################
@@ -65,17 +84,17 @@ X_test = scaler.transform(X_test)
     ###############################
 
 
-# Add a first Dense (fully-connected) layer. 
+# add a first dense (fully-connected) layer. 
 # we always need to supply the input shape of data in the first layer.
 # dropout can prevent overfitting and should speed up the training.
 model = Sequential()
-model.add(Dense(10, input_shape = [X_train.shape[1]], activation = 'relu'))
-model.add(Dropout(0.5))
+model.add(Dense(100, input_shape = [X_train.shape[1]], activation = 'relu'))
+model.add(Dropout(0.2))
 
 
 # More layers to allow the network to learn more complex relationships
-model.add(Dense(10, activation = 'relu'))
-model.add(Dropout(0.5))
+model.add(Dense(100, activation = 'relu'))
+model.add(Dropout(0.2))
 
 
 # sigmoid is suited for binary classification.
@@ -94,8 +113,7 @@ model.summary()
 # epochs are the number of training loops. 
 # we validate directly on test data. 
 # can cause overfitting but is the fastest way for good results.
-model.fit(X_train, Y_train, batch_size = 300, epochs = 5, verbose = 1, 
-        validation_data = [X_test, Y_test])
+model.fit(X_train, Y_train, batch_size = 300, epochs = 10, verbose = 1)
 
 model.compile(optimizer = 'adam', loss = 'binary_crossentropy', 
         metrics = ['accuracy'])
