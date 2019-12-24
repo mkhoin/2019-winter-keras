@@ -10,7 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import scipy.cluster.hierarchy as shc
 from sklearn.preprocessing import normalize
-from sklearn.cluster import AgglomerativeClustering, KMeans
+from sklearn.cluster import KMeans
 
 
     ####################
@@ -24,6 +24,7 @@ print(data.head())
 
 
 # scale the raw dataset and print the first five data.
+# normalize returns numpy array, so we convert to dataframe
 data_scaled = normalize(data)
 data_scaled = pd.DataFrame(data_scaled, columns = data.columns)
 print(data_scaled.head())
