@@ -100,12 +100,12 @@ model.add(Dropout(0.2))
 # sigmoid is suited for binary classification.
 # softmax for multiple categorical classification.
 model.add(Dense(1, activation = 'sigmoid'))
+model.summary()
 
 
 # adam works well in general.
 # for this classification task, binary crossentropy makes sense.
 model.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
-model.summary()
 
 
 # this is where the training starts. training data is loaded here.
@@ -114,9 +114,6 @@ model.summary()
 # we validate directly on test data. 
 # can cause overfitting but is the fastest way for good results.
 model.fit(X_train, Y_train, batch_size = 300, epochs = 10, verbose = 1)
-
-model.compile(optimizer = 'adam', loss = 'binary_crossentropy', 
-        metrics = ['accuracy'])
 
 
     ####################
