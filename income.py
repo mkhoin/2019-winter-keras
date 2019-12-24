@@ -12,7 +12,6 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import confusion_matrix, f1_score
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
-from keras.callbacks import ModelCheckpoint
 from sklearn.model_selection import train_test_split
 
 
