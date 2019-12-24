@@ -61,6 +61,7 @@ df_test = df_test.fillna(0)
 
 
 # prepare training and test datasets
+# .values converts dataframe to numpy array
 X_train = df_train.loc[:, ~(df_train.columns == 'income')].values
 X_test = df_test.loc[:, ~(df_test.columns == 'income')].values
 Y_train = df_train['income'].values
