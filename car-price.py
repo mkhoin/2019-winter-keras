@@ -50,7 +50,7 @@ df["horsepower"] = df["horsepower"].astype("int")
 print(df.describe())
 
 
-# plotting positive relation between eigine size vs. price
+# plotting positive relation between engine size vs. price
 sns.regplot(x = 'engine-size', y = 'price', data = df)
 plt.title("Scatterplot of Engine Size vs Price")
 plt.xlabel("Engine Size")

@@ -22,24 +22,25 @@ from keras.optimizers import Adam
 
 
 # load iris dataset.
-iris_data = load_iris() 
+iris = load_iris() 
 print('\n === SHAPE INFO ===')
-print('Data:', iris_data.data.shape)
-print('Label:', iris_data.target.shape)
+print('Data:', iris.data.shape)
+print('Label:', iris.target.shape)
 
 print('\nFirst five data: ')
-print(iris_data.data[:5])
+print(iris.data[:5])
 print('\nFirst five labels: ')
-print(iris_data.target[:5])
+print(iris.target[:5])
 
 
 # reshaping label data.
-x = iris_data.data
-y = iris_data.target.reshape(-1, 1) 
-print('\nReshpaed label dataset:', y.shape)
+x = iris.data
+y = iris.target.reshape(-1, 1) 
+print('\nReshaped label dataset:', y.shape)
 
 
 # one-hot encode the labels.
+# then scale the labels.
 encoder = OneHotEncoder(sparse = False)
 y_scaled = encoder.fit_transform(y)
 
@@ -65,8 +66,8 @@ model.add(Dense(3, activation = 'softmax'))
 
 
 # adam optimizer with learning rate of 0.001.
-optimizer = Adam(lr = 0.001)
-model.compile(optimizer, loss = 'categorical_crossentropy', metrics = ['accuracy'])
+opt = Adam(lr = 0.001)
+model.compile(opt, loss = 'categorical_crossentropy', metrics = ['accuracy'])
 print(model.summary())
 
 
