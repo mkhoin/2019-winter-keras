@@ -10,8 +10,8 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import confusion_matrix, f1_score
-from keras.models import Sequential
-from keras.layers import Dense, Dropout
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
 from sklearn.model_selection import train_test_split
 
 
@@ -122,7 +122,7 @@ model.fit(X_train, Y_train, batch_size = 300, epochs = 10, verbose = 1)
 
 
 # we calculate the accuracy of our model using the test set.
-score = model.evaluate(X_test, Y_test, verbose = 1)
+score = model.evaluate(X_test, Y_test, verbose = 0)
 print('\nKeras DNN model accuracy = ', score[1])
 
 

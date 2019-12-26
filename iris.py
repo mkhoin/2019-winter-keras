@@ -11,9 +11,9 @@ import pandas as pd
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import Adam
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.optimizers import Adam
 
 
     ####################
@@ -81,5 +81,5 @@ model.fit(X_train, Y_train, batch_size = 5, epochs = 30, verbose = 1)
 
 
 # test on unseen data.
-results = model.evaluate(X_test, Y_test, verbose = 1)
+results = model.evaluate(X_test, Y_test, verbose = 0)
 print('Final test set accuracy: {:4f}'.format(results[1]))
